@@ -1,0 +1,47 @@
+<!-- inherit from main template using flask -->
+{% extends "main_template.html" %}
+
+    {% block content %}
+        <!-- display the product attributes in a table with product_id, attribute_id, and attribute_value -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Product Attributes</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="/product_attributes/add" class="btn btn-primary">Add Product Attribute</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product ID</th>
+                                <th>Attribute ID</th>
+                                <th>Attribute Value</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product_attribute in product_attributes %}
+                                <tr>
+                                    <td>{{ product_attribute.product_attribute_id }}</td>
+                                    <td>{{ product_attribute.product_id }}</td>
+                                    <td>{{ product_attribute.attribute_id }}</td>
+                                    <td>{{ product_attribute.attribute_value }}</td>
+                                    <td>
+                                        <a href="/product_attributes/edit/{{ product_attribute.product_attribute_id }}" class="btn btn-primary">Edit</a>
+                                        <a href="/product_attributes/delete/{{ product_attribute.product_attribute_id }}" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    {% endblock content %}

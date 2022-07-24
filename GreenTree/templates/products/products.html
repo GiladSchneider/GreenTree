@@ -1,0 +1,47 @@
+<!-- inherit from main template using flask -->
+{% extends "main_template.html" %}
+
+    {% block content %}
+    <!-- print the products from the given products -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Products</h1>
+            </div>
+
+            <div class="col-md-12">
+                <a href="/products/add" class="btn btn-primary">Add Product</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td>{{ product.product_id }}</td>
+                                <td>{{ product.product_name }}</td>
+                                <td>{{ product.product_description }}</td>
+                                <td>{{ product.product_active }}</td>
+                                <td>
+                                    <a href="/products/edit/{{ product.product_id }}" class="btn btn-primary">Edit</a>
+                                    <a href="/products/delete/{{ product.product_id }}" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endblock content %}
+    

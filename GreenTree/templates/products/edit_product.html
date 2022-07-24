@@ -1,0 +1,45 @@
+<!-- inherit from main template using flask -->
+{% extends "main_template.html" %}
+
+    {% block content %}
+    <!-- create an edit product form -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Edit Product</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form action="/products/edit/{{ product.product_id }}" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ product.product_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" class="form-control" id="description" name="description" value="{{ product.product_description }}">
+                    </div>
+                    <!-- Create a radio with two options for the active section -->
+                    <div class="form-group">
+                        <label for="active">Active</label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="active" id="active" value="1" {% if product.product_active == 1 %}checked{% endif %}>
+                                Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="active" id="active" value="0" {% if product.product_active == 0 %}checked{% endif %}>
+                                No
+                            </label>
+                        </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+
+<!-- create a product edit page -->
