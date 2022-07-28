@@ -125,5 +125,9 @@ def edit_product_page(product_id):
     # get the attributes
     attributes = get_attributes()
 
+    # grab a list of product brands from the database
+    cursor.execute("SELECT DISTINCT product_brand FROM products")
+    brands = cursor.fetchall()
+    
     # return the edit_product page
-    return render_template('edit_product.html', product=results, attributes=attributes, product_types=PRODUCT_TYPES)
+    return render_template('edit_product.html', product=results, attributes=attributes, product_types=PRODUCT_TYPES, brands=brands)
