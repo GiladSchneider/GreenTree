@@ -5,4 +5,4 @@ from flask import Blueprint, render_template, request, redirect, url_for
 @app.route('/strains/')
 def strains():
     # return the strains page
-    return render_template('strains/strains.html')
+    return render_template('strains.html')

@@ -1,5 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask
 from config import app
-from views import index, strains, products, product_attributes, attributes
+import index, strains, products, product_attributes, attributes
 
 app.run(debug=True)
