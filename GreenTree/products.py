@@ -1,3 +1,4 @@
+from math import nan
 from attributes import get_attributes
 from config import *
 from flask import render_template, request, redirect, url_for
@@ -8,9 +9,10 @@ def get_products():
     results = cursor.fetchall()                 # fetch all the rows in a list of lists
     return results
 
-def add_product(name, description, active, image_filepath, type=None, brand=None, price=None, discount_price=None, strain=None, strain_type=None, thc_percentage=None, size=None):
-    cursor.execute("INSERT INTO products (product_name, product_description, product_active, product_image_filepath, product_type, product_brand, product_price, product_discount_price, product_strain, product_strain_type, product_thc_percentage, product_size) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (name, description, active, image_filepath, type, brand, price, discount_price, strain, strain_type, thc_percentage, size))
-    connection.commit()
+def add_product(name, description, active, image_filepath=None, type=None, brand=None, price=None, discount_price=None, strain=None, strain_type=None, thc_percentage=None, size=None):
+    args = [name, description, active, image_filepath, type, brand, price, discount_price, strain, strain_type, thc_percentage, size]
+    cursor.execute("INSERT INTO products (product_name, product_description, product_active, product_image_filepath, product_type, product_brand, product_price, product_discount_price, product_strain, product_strain_type, product_thc_percentage, product_size) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", args)    
+    connection.commit()                          # commit the changes to the database
     return True
 
 def delete_product(id):
