@@ -1,0 +1,45 @@
+<!-- inherit from main template using flask -->
+{% extends "main_template.html" %}
+
+    {% block content %}
+        <!-- create an edit attribute page -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Edit Attribute</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="/attributes/edit/{{ attribute.attribute_id }}" method="POST">
+                        <div class="form-group">
+                            <label for="attribute_name">Name</label>
+                            <input type="text" class="form-control" id="attribute_name" name="attribute_name" value="{{ attribute.attribute_name }}" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="attribute_description">Description</label>
+                            <input type="text" class="form-control" id="attribute_description" name="attribute_description" value="{{ attribute.attribute_description }}" placeholder="Description">
+                        </div>
+                        <!-- create a radio for the active section with yes and no options, yes being the default -->
+                        <div class="form-group">
+                            <label for="attribute_active">Active</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="attribute_active" id="attribute_active" value="1" {% if attribute.attribute_active == 1 %}checked{% endif %}>
+                                    Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="attribute_active" id="attribute_active" value="0" {% if attribute.attribute_active == 0 %}checked{% endif %}>
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock content %}
+

@@ -1,0 +1,33 @@
+<!-- inherit from main template using flask -->
+{% extends "main_template.html" %}
+
+    {% block content %}
+        <!-- create an edit product attribute page -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Edit Product Attribute</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="/product_attributes/edit/{{ product_attribute.product_attribute_id }}" method="POST">
+                        <div class="form-group">
+                            <label for="product_id">Product ID</label>
+                            <input type="text" class="form-control" id="product_id" name="product_id" placeholder="Product ID" value="{{ product_attribute.product_id }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="attribute_id">Attribute ID</label>
+                            <input type="text" class="form-control" id="attribute_id" name="attribute_id" placeholder="Attribute ID" value="{{ product_attribute.attribute_id }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="attribute_value">Attribute Value</label>
+                            <input type="text" class="form-control" id="attribute_value" name="attribute_value" placeholder="Attribute Value" value="{{ product_attribute.attribute_value }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock content %}
+

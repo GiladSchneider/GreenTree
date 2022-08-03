@@ -1,0 +1,163 @@
+<!-- inherit from main template using flask -->
+{% extends "main_template.html" %}
+
+    {% block imports %}
+    
+    <!-- Multiselect Dropdown -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
+    {% endblock imports %}
+
+
+    {% block content %}
+    
+    <!-- create an add product form -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Add Product</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form action="/products/add" method="POST" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Product Name...">
+                    </div>
+                    
+                    <p></p>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Enter Product Description...">
+                    </div>
+                
+                    
+                    <p></p>
+                    
+                    <!-- Create a radio with two options for the active section -->
+                    <div class="form-group">
+                        <label for="active">Active</label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="active" id="active" value="1" checked>
+                                Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="active" id="active" value="0">
+                                No
+                            </label>
+                        </div>
+                    </div>
+
+                    <p></p>
+
+                    </div>
+                    
+                    <!-- create an image upload section -->
+                    <div class="form-group">
+                        <label for="image">Product Image</label>
+                        <input type="file" class="form-control-file" id="image" name="image">
+                    </div>
+
+                    <p></p>
+
+                    <!-- display the product types and choose one for selection -->                    
+                    <div class="form-group">
+                        <label for="product_type">Product Type</label>
+                        <input type="text" list="product_types" id="product_type" name="product_type" class="form-control"/>
+                            <datalist id="product_types">
+                                {% for product_type in product_types %}
+                                    <option>{{product_type.product_type}}</option>
+                                {% endfor %}
+                            </datalist>
+                    </div> 
+
+                    <!-- display the brands and choose one for selection -->                    
+                    <div class="form-group">
+                        <label for="brand">Brand</label>
+                        <input type="text" list="brands" id="brand" name="brand" class="form-control"/>
+                            <datalist id="brands">
+                                {% for brand in brands %}
+                                    <option>{{brand.product_brand}}</option>
+                                {% endfor %}
+                            </datalist>
+                    </div>           
+
+                    <!-- create a section for product price -->
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="text" class="form-control" id="price" name="price" placeholder="Enter Product Price...">
+                    </div>
+
+                    <!-- create a section for product discount_price -->
+                    <div class="form-group">
+                        <label for="discount_price">Discount Price</label>
+                        <input type="text" class="form-control" id="discount_price" name="discount_price" placeholder="Enter Product Discount Price...">
+                    </div>
+                    
+                    <!-- display the strains and choose one for selection -->  
+                    <div class="form-group">
+                        <label for="strain">Strain</label>
+                        <input type="text" list="strains" id="strain" name="strain" class="form-control"/>
+                            <datalist id="strains">
+                                {% for strain in strains %}
+                                    <option>{{strain.product_strain}}</option>
+                                {% endfor %}
+                            </datalist>
+                    </div>
+
+                    <!-- display the strain types and choose one for selection -->  
+                    <div class="form-group">
+                        <label for="strain_type">Strain Type</label>
+                        <input type="text" list="strain_types" id="strain_type" name="strain_type" class="form-control"/>
+                            <datalist id="strain_types">
+                                {% for strain_type in strain_types %}
+                                    <option>{{strain_type.product_strain_type}}</option>
+                                {% endfor %}
+                            </datalist>
+                    </div>
+                    
+                    <!-- create a section for product thc_percentage -->
+                    <div class="form-group">
+                        <label for="thc_percentage">THC Percentage</label>
+                        <input type="text" class="form-control" id="thc_percentage" name="thc_percentage" placeholder="Enter Product THC Percentage...">
+                    </div>
+
+                    <!-- create a section for product size -->
+                    <div class="form-group">
+                        <label for="size">Size</label>
+                        <input type="text" class="form-control" id="size" name="size" placeholder="Enter Product Size...">
+                    </div>
+                             
+                    <!-- multiselect dropdown -->
+                    <div class = "form-group">
+                        <label for="attributes">Select Attributes...</label>
+                        <select class="form-control selectpicker" multiple data-live-search="true" id="attributes" name="attributes">
+                        {% for attribute in attributes %}
+                            <option class = "form-control" value="{{attribute.attribute_id}}" id="attribute_selection" name="attribute_selection">{{attribute.attribute_name}}</option>
+                        {% endfor %}                                
+                        </select>
+                        
+                    </div>
+                                                           
+                    <div><button type="submit" class="btn btn-primary">Submit</button></div>     
+
+                    <!-- create a multiselect drop down menue with search -->                                       
+
+
+            </form>
+        </div>
+    </div>
+
+
+    
+    {% endblock content %}
+

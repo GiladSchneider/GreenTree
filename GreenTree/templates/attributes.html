@@ -1,0 +1,48 @@
+<!-- inherit from main template using flask -->
+{% extends "main_template.html" %}
+
+    {% block content %}
+
+        <!-- display a table with all the given attributes -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Attributes</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="/attributes/add" class="btn btn-primary">Add Attribute</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table style="width:inherit" class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attribute in attributes %}
+                                <tr>
+                                    <td>{{ attribute.attribute_id }}</td>
+                                    <td>{{ attribute.attribute_name }}</td>
+                                    <td>{{ attribute.attribute_description }}</td>
+                                    <td>{{ attribute.attribute_active }}</td>
+                                    <td>
+                                        <a href="/attributes/edit/{{ attribute.attribute_id }}" class="btn btn-primary">Edit</a>
+                                        <a href="/attributes/delete/{{ attribute.attribute_id }}" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    {% endblock content %}
