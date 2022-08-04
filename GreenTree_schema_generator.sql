@@ -64,9 +64,16 @@ CREATE TABLE IF NOT EXISTS `GreenTree`.`products` (
   `product_strain_type` VARCHAR(45) NULL DEFAULT NULL,
   `product_thc_percentage` VARCHAR(45) NULL DEFAULT NULL,
   `product_size` VARCHAR(45) NULL DEFAULT NULL,
+  `product_strain_taste` VARCHAR(45) NULL DEFAULT NULL,
+  `product_strain_terpenes` VARCHAR(45) NULL DEFAULT NULL,
+  `product_weight` VARCHAR(45) NULL DEFAULT NULL,
+  `product_rating` VARCHAR(45) NULL DEFAULT NULL,
+  `product_reviews` VARCHAR(45) NULL DEFAULT NULL,
+  `product_strain_rating` VARCHAR(45) NULL DEFAULT NULL,
+  `product_strain_reviews` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`product_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 963
+AUTO_INCREMENT = 964
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
