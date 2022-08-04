@@ -69,17 +69,6 @@
 
                     <p></p>
 
-                    <!-- display the product types and choose one for selection -->                    
-                    <div class="form-group">
-                        <label for="product_type">Product Type</label>
-                        <input type="text" list="product_types" id="product_type" name="product_type" class="form-control"/>
-                            <datalist id="product_types">
-                                {% for product_type in product_types %}
-                                    <option>{{product_type.product_type}}</option>
-                                {% endfor %}
-                            </datalist>
-                    </div> 
-
                     <!-- display the brands and choose one for selection -->                    
                     <div class="form-group">
                         <label for="brand">Brand</label>
@@ -103,6 +92,35 @@
                         <input type="text" class="form-control" id="discount_price" name="discount_price" placeholder="Enter Product Discount Price...">
                     </div>
                     
+                    <!-- create a section for product size -->
+                    <div class="form-group">
+                        <label for="size">Size</label>
+                        <input type="text" class="form-control" id="size" name="size" placeholder="Enter Product Size...">
+                    </div>
+
+                    <!-- display the product weight -->
+                    <div class="form-group">
+                        <label for="weight">Weight</label>
+                        <input type="text" class="form-control" id="weight" name="weight" placeholder="Enter Product Weight...">
+                    </div>  
+
+                    <!-- create a section for product thc_percentage -->
+                    <div class="form-group">
+                        <label for="thc_percentage">THC Percentage</label>
+                        <input type="text" class="form-control" id="thc_percentage" name="thc_percentage" placeholder="Enter Product THC Percentage...">
+                    </div>
+                    
+                    <!-- display the product types and choose one for selection -->                    
+                    <div class="form-group">
+                        <label for="product_type">Product Type</label>
+                        <input type="text" list="product_types" id="product_type" name="product_type" class="form-control"/>
+                            <datalist id="product_types">
+                                {% for product_type in product_types %}
+                                    <option>{{product_type.product_type}}</option>
+                                {% endfor %}
+                            </datalist>
+                    </div> 
+
                     <!-- display the strains and choose one for selection -->  
                     <div class="form-group">
                         <label for="strain">Strain</label>
@@ -124,35 +142,40 @@
                                 {% endfor %}
                             </datalist>
                     </div>
-                    
-                    <!-- create a section for product thc_percentage -->
+
+                    <!-- display the strain_tastes and choose one for selection -->
                     <div class="form-group">
-                        <label for="thc_percentage">THC Percentage</label>
-                        <input type="text" class="form-control" id="thc_percentage" name="thc_percentage" placeholder="Enter Product THC Percentage...">
+                        <label for="strain_taste">Strain Taste</label>
+                        <input type="text" list="strain_tastes" id="strain_taste" name="strain_taste" class="form-control"/>
+                            <datalist id="strain_tastes">
+                                {% for strain_taste in strain_tastes %}
+                                    <option>{{strain_taste.product_strain_taste}}</option>
+                                {% endfor %}
+                            </datalist>
                     </div>
 
-                    <!-- create a section for product size -->
+                    <!-- display the strain terpenes and choose one for selection -->
                     <div class="form-group">
-                        <label for="size">Size</label>
-                        <input type="text" class="form-control" id="size" name="size" placeholder="Enter Product Size...">
-                    </div>
+                        <label for="strain_terpenes">Strain Terpenes</label>
+                        <input type="text" list="strain_terpenes" id="strain_terpenes" name="strain_terpenes" class="form-control"/>
+                            <datalist id="strain_terpenes">
+                                {% for strain_terpene in strain_terpenes %}
+                                    <option>{{strain_terpene.product_strain_terpenes}}</option>
+                                {% endfor %}
+                            </datalist>
+                    </div>                                      
                              
-                    <!-- multiselect dropdown -->
+                    <!-- multiselect dropdown for attributes -->
                     <div class = "form-group">
                         <label for="attributes">Select Attributes...</label>
                         <select class="form-control selectpicker" multiple data-live-search="true" id="attributes" name="attributes">
                         {% for attribute in attributes %}
                             <option class = "form-control" value="{{attribute.attribute_id}}" id="attribute_selection" name="attribute_selection">{{attribute.attribute_name}}</option>
                         {% endfor %}                                
-                        </select>
-                        
+                        </select>                        
                     </div>
                                                            
-                    <div><button type="submit" class="btn btn-primary">Submit</button></div>     
-
-                    <!-- create a multiselect drop down menue with search -->                                       
-
-
+                    <div><button type="submit" class="btn btn-primary">Submit</button></div>                                           
             </form>
         </div>
     </div>

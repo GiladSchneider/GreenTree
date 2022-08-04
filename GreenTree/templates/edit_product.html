@@ -54,16 +54,7 @@
 
                     <p></p>
 
-                    <!-- display the product types and choose one for selection -->                    
-                    <div class="form-group">
-                        <label for="product_type">Product Type</label>
-                        <input type="text" list="product_types" id="product_type" name="product_type" class="form-control" value="{{ product.product_type }}"/>
-                            <datalist id="product_types">
-                                {% for product_type in product_types %}
-                                    <option>{{product_type.product_type}}</option>
-                                {% endfor %}
-                            </datalist>
-                    </div> 
+                    
                     
                     <!-- display the brands and choose one for selection -->                    
                     <div class="form-group">
@@ -87,6 +78,35 @@
                         <label for="discount_price">Discount Price</label>
                         <input type="text" class="form-control" id="discount_price" name="discount_price" value="{{ product.product_discount_price }}">
                     </div>
+
+                    <!-- create a section for product size -->
+                    <div class="form-group">
+                        <label for="size">Size</label>
+                        <input type="text" class="form-control" id="size" name="size" value="{{ product.product_size }}">
+                    </div>
+
+                    <!-- create a section for product weight -->
+                    <div class="form-group">
+                        <label for="weight">Weight</label>
+                        <input type="text" class="form-control" id="weight" name="weight" value="{{ product.product_weight }}">
+                    </div>
+
+                    <!-- create a section for product thc_percentage -->
+                    <div class="form-group">
+                        <label for="thc_percentage">THC Percentage</label>
+                        <input type="text" class="form-control" id="thc_percentage" name="thc_percentage" value="{{ product.product_thc_percentage }}">
+                    </div>
+
+                    <!-- display the product types and choose one for selection -->                    
+                    <div class="form-group">
+                        <label for="product_type">Product Type</label>
+                        <input type="text" list="product_types" id="product_type" name="product_type" class="form-control" value="{{ product.product_type }}"/>
+                            <datalist id="product_types">
+                                {% for product_type in product_types %}
+                                    <option>{{product_type.product_type}}</option>
+                                {% endfor %}
+                            </datalist>
+                    </div> 
                     
                     <!-- display the strains and choose one for selection -->  
                     <div class="form-group">
@@ -108,19 +128,30 @@
                                     <option>{{strain_type.product_strain_type}}</option>
                                 {% endfor %}
                             </datalist>
+                    </div>  
+                    
+                    <!-- display the strain taste and choose one for selection -->  
+                    <div class="form-group">
+                        <label for="strain_taste">Strain Taste</label>
+                        <input type="text" list="strain_tastes" id="strain_taste" name="strain_taste" class="form-control" value="{{ product.product_strain_taste }}"/>
+                            <datalist id="strain_tastes">
+                                {% for strain_taste in strain_tastes %}
+                                    <option>{{strain_taste.product_strain_taste}}</option>
+                                {% endfor %}
+                            </datalist>
                     </div>
 
-                    <!-- create a section for product thc_percentage -->
+                    <!-- display the strain terpenes and choose one for selection --> 
                     <div class="form-group">
-                        <label for="thc_percentage">THC Percentage</label>
-                        <input type="text" class="form-control" id="thc_percentage" name="thc_percentage" value="{{ product.product_thc_percentage }}">
+                        <label for="strain_terpenes">Strain Terpenes</label>
+                        <input type="text" list="strain_terpenes" id="strain_terpenes" name="strain_terpenes" class="form-control" value="{{ product.product_strain_terpenes }}"/>
+                            <datalist id="strain_terpenes">
+                                {% for strain_terpenes in strain_terpenes %}
+                                    <option>{{strain_terpenes.product_strain_terpenes}}</option>
+                                {% endfor %}
+                            </datalist>
                     </div>
-
-                    <!-- create a section for product size -->
-                    <div class="form-group">
-                        <label for="size">Size</label>
-                        <input type="text" class="form-control" id="size" name="size" value="{{ product.product_size }}">
-                    </div>
+                    
 
                     <!-- display the products attributes -->
                     <!-- Multiselect Dropdown -->

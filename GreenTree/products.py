@@ -9,11 +9,11 @@ def get_products():
     results = cursor.fetchall()                 # fetch all the rows in a list of lists
     return results
 
-def add_product(name, description, active, image_filepath=None, type=None, brand=None, price=None, discount_price=None, strain=None, strain_type=None, thc_percentage=None, size=None):
-    args = [name, description, active, image_filepath, type, brand, price, discount_price, strain, strain_type, thc_percentage, size]
-    cursor.execute("INSERT INTO products (product_name, product_description, product_active, product_image_filepath, product_type, product_brand, product_price, product_discount_price, product_strain, product_strain_type, product_thc_percentage, product_size) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", args)    
-    connection.commit()                          # commit the changes to the database
-    return True
+def add_product(name, description, active, image_filepath=None, type=None, brand=None, price=None, discount_price=None, strain=None, strain_type=None, thc_percentage=None, size=None, weight=None, strain_terpenes=None, strain_taste=None):
+    args = [name, description, active, image_filepath, type, brand, price, discount_price, strain, strain_type, thc_percentage, size, weight, strain_terpenes, strain_taste]    
+    cursor.execute("INSERT INTO products (product_name, product_description, product_active, product_image_filepath, product_type, product_brand, product_price, product_discount_price, product_strain, product_strain_type, product_thc_percentage, product_size, product_weight, product_strain_terpenes, product_strain_taste) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", args)
+    connection.commit()
+    return cursor.lastrowid
 
 def delete_product(id):
     cursor.execute("DELETE FROM products WHERE product_id = %s", (id))
@@ -56,6 +56,9 @@ def add_product_page():
         strain_type = request.form['strain_type']
         thc_percentage = request.form['thc_percentage']
         size = request.form['size']
+        weight = request.form['weight']
+        strain_terpenes = request.form['strain_terpenes']
+        strain_taste = request.form['strain_taste']
         # END NEW
         
         filename = None
@@ -66,7 +69,7 @@ def add_product_page():
             db_filepath = DATABASE_IMAGE_FOLDER + filename
             image_file.save(filepath)                                  
         # add the product to the database
-        add_product(name, description, active, db_filepath, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size)
+        add_product(name, description, active, db_filepath, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size, weight, strain_terpenes, strain_taste)
         # add the attributes to the product
         product_id = cursor.lastrowid        
         for attribute_id in attributes:
@@ -93,12 +96,22 @@ def add_product_page():
     cursor.execute("SELECT DISTINCT product_strain_type FROM products")
     strain_types = cursor.fetchall()
 
+    # get a list of unique strain terpenes from the database
+    cursor.execute("SELECT DISTINCT product_strain_terpenes FROM products")
+    strain_terpenes = cursor.fetchall()
+
+    # get a list of unique strain tastes from the database
+    cursor.execute("SELECT DISTINCT product_strain_taste FROM products")
+    strain_tastes = cursor.fetchall()
+
     return render_template('add_product.html', 
                             attributes=display_attributes, 
                             product_types=product_types, 
                             brands=brands, 
                             strains=strains, 
-                            strain_types=strain_types)
+                            strain_types=strain_types,
+                            strain_terpenes=strain_terpenes,
+                            strain_tastes=strain_tastes)
 
 # create a route for the delete_product url
 @app.route('/products/delete/<product_id>')

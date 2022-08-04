@@ -1,5 +1,4 @@
-create product images function
-display product image in varias placed
-add attributes to product creation
-
-
+UPDTAE schema generation code
+automatically run schema creation on run, check if schema already exists
+create better product page front end
+creat product browsing page
