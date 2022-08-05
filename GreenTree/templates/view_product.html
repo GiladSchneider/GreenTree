@@ -1,0 +1,61 @@
+<!-- inherit from main template using flask -->
+{% extends "main_template.html" %}
+
+    {% block imports %}
+     
+    {% endblock imports %}
+    
+    {% block content %}
+    <!-- create 4 rows using bootstrap -->
+    <div class="row">
+    
+        <!-- create 2 colums -->
+        <div class="col">
+            <div class = "container-fluid">
+                <!-- display product name, product_price, product_discount_price, product_rating, product description
+                        buy now, love, and compare buttons -->
+                <h2>{{product.product_name}}</h2>
+
+                <hr>
+
+                {% if product.product_discount_price == None %}
+                    <h3>${{product.product_price}}</h3>
+                {% else %}   
+                <!-- display the price and the discount price on the same line  -->
+                <h3><span class="text-muted" style="text-decoration: line-through;">${{product.product_price}} </span>&nbsp;&nbsp;${{product.product_discount_price}}</h3>
+                {% endif %}
+                
+                <!-- display a number of stars equal to the product rating -->
+                {% if product.product_rating != None %}
+                    <div class="stars">
+                        {% for i in range(product.product_rating) %}
+                            <span class="fa fa-star checked"></span>
+                        {% endfor %}
+                        {% for i in range(5-product.product_rating) %}
+                            <span class="fa fa-star"></span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <h5>Product Reviews: {{product.product_rating}}</h5>
+                <p>{{product.product_description}}</p>
+                <a href="/products/view/{{product.product_id}}" class="btn btn-primary">Shop</a>
+                <a href="/products/love/{{product.product_id}}" class="btn btn-primary">Love</a>
+                <a href="/products/compare/{{product.product_id}}" class="btn btn-primary">Compare</a>
+            </div>
+
+        </div>
+
+
+        <div class="col"></div>
+    </div>
+
+    <div class="row">
+    </div>
+
+    <div class="row">
+    </div>
+
+    <div class="row">
+    </div>
+    {% endblock content %}

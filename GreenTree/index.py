@@ -1,9 +1,11 @@
 from config import *
 from flask import render_template
+from config import *
 
 @app.route('/')
 @app.route('/index/')
+@app.route('/home/')
 def index():
-    languages = ["C++", "Python", "PHP", "Java", "C", "Ruby",
-                     "R", "C#", "Dart", "Fortran", "Pascal", "Javascript"]
-    return render_template('index.html', languages=languages)
+    cursor.execute("SELECT * FROM products")
+    products = cursor.fetchall()
+    return render_template('index.html', products=products)

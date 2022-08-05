@@ -186,3 +186,13 @@ def edit_product_page(product_id):
                             brands=brands, 
                             strains=strains, 
                             strain_types=strain_types)
+
+# create a route for the view_product url
+@app.route('/products/view/<product_id>')
+def view_product_page(product_id):
+    # get product information from the database
+    cursor.execute("SELECT * FROM products WHERE product_id = %s", (product_id))
+    product_info = cursor.fetchone()
+
+    return render_template('view_product.html', product=product_info)
+

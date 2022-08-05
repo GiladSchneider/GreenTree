@@ -7,5 +7,25 @@
     
     {% block content %}
 
+    <!-- display each product in a bootstrap card -->
+
+    {% for product in products %}
+        
+    
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{product.product_image_filepath}}" alt="">
+        <div class="card-body">
+            <h5 class="card-title">{{product.product_name}}</h5>
+            <p class="card-text">{{product.product_description}}</p>
+            <a href="/products/view/{{product.product_id}}" class="btn btn-primary">Shop</a>
+        </div>
+    <div>
+
+
+
+    
+    {% endfor %}
+
+    
     {% endblock content %}
 
