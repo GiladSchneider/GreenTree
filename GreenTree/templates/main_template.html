@@ -24,45 +24,35 @@
     <!-- using bootstrap, create a navbar for the website -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <!-- display the image in staticcalled tree ooon the navbar -->
-                <img src="/static/tree.png" width="50" height="50">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/index">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products">Products</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/attributes">Attributes</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/product_attributes">Product Attributes</a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="/strains">Strains</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- create a search bar in the nav bar -->
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            </form>
+          <a class="navbar-brand" href="#">
+              <!-- display the image in staticcalled tree ooon the navbar -->
+              <img src="/static/tree.png" width="50" height="50">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="/index">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/products">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/attributes">Attributes</a>
+              </li>
+            </ul>
+          </div>
         </div>
     </nav>
                
-    <!-- make a content block using flask -->
+  <!-- make a content block using flask -->
+  <div class="container-fluid">
     {% block content %}
     
     {% endblock content%}
+  </div>  
 
 </body>
 </html>

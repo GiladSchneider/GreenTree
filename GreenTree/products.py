@@ -1,4 +1,4 @@
-from math import nan
+from numpy import random
 from attributes import get_attributes
 from config import *
 from flask import render_template, request, redirect, url_for
@@ -10,8 +10,23 @@ def get_products():
     return results
 
 def add_product(name, description, active, image_filepath=None, type=None, brand=None, price=None, discount_price=None, strain=None, strain_type=None, thc_percentage=None, size=None, weight=None, strain_terpenes=None, strain_taste=None):
-    args = [name, description, active, image_filepath, type, brand, price, discount_price, strain, strain_type, thc_percentage, size, weight, strain_terpenes, strain_taste]    
-    cursor.execute("INSERT INTO products (product_name, product_description, product_active, product_image_filepath, product_type, product_brand, product_price, product_discount_price, product_strain, product_strain_type, product_thc_percentage, product_size, product_weight, product_strain_terpenes, product_strain_taste) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", args)
+    product_rating = random.randint(1, 5)
+    product_reviews = random.randint(1, 20)
+    strain_rating = random.randint(1, 5)
+    strain_reviews = random.randint(1, 20)
+    
+    args = [name, description, active, image_filepath, 
+            type, brand, price, discount_price, 
+            strain, strain_type, thc_percentage, 
+            size, weight, strain_terpenes, strain_taste, 
+            product_rating, product_reviews, strain_rating, strain_reviews] 
+    cursor.execute("""INSERT INTO products 
+    (product_name, product_description, product_active, product_image_filepath, 
+    product_type, product_brand, product_price, product_discount_price, 
+    product_strain, product_strain_type, product_thc_percentage,
+    product_size, product_weight, product_strain_terpenes, product_strain_taste, 
+    product_rating, product_reviews, product_strain_rating, product_strain_reviews)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", args)
     connection.commit()
     return cursor.lastrowid
 
