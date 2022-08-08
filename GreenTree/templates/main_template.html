@@ -15,6 +15,9 @@
     <!-- Select2 links -->
     <link rel="stylesheet" href="/path/to/select2.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+
+    <!-- recaptcha script -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     
     {% block imports %}
 
@@ -48,7 +51,7 @@
     </nav>
                
   <!-- make a content block using flask -->
-  <div class="container-fluid">
+  <div class="container" style="align-self: start;">
     {% block content %}
     
     {% endblock content%}

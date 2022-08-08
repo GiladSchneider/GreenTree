@@ -9,7 +9,7 @@ def get_products():
     results = cursor.fetchall()                 # fetch all the rows in a list of lists
     return results
 
-def add_product(name, description, active, image_filepath=None, type=None, brand=None, price=None, discount_price=None, strain=None, strain_type=None, thc_percentage=None, size=None, weight=None, strain_terpenes=None, strain_taste=None):
+def add_product(name, description, active, image_filepath=None, type=None, brand=None, price=None, discount_price=None, strain=None, strain_type=None, thc_percentage=None, size=None, weight=None, strain_terpenes=None, strain_taste=None, strain_description=None):
     product_rating = random.randint(1, 5)
     product_reviews = random.randint(1, 20)
     strain_rating = random.randint(1, 5)
@@ -19,14 +19,16 @@ def add_product(name, description, active, image_filepath=None, type=None, brand
             type, brand, price, discount_price, 
             strain, strain_type, thc_percentage, 
             size, weight, strain_terpenes, strain_taste, 
-            product_rating, product_reviews, strain_rating, strain_reviews] 
+            product_rating, product_reviews, strain_rating, strain_reviews, 
+            strain_description]
     cursor.execute("""INSERT INTO products 
     (product_name, product_description, product_active, product_image_filepath, 
     product_type, product_brand, product_price, product_discount_price, 
     product_strain, product_strain_type, product_thc_percentage,
     product_size, product_weight, product_strain_terpenes, product_strain_taste, 
-    product_rating, product_reviews, product_strain_rating, product_strain_reviews)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", args)
+    product_rating, product_reviews, product_strain_rating, product_strain_reviews,
+    product_strain_description)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", args)
     connection.commit()
     return cursor.lastrowid
 
@@ -74,6 +76,7 @@ def add_product_page():
         weight = request.form['weight']
         strain_terpenes = request.form['strain_terpenes']
         strain_taste = request.form['strain_taste']
+        strain_description = request.form['strain_description']
         # END NEW
         
         filename = None
@@ -84,7 +87,7 @@ def add_product_page():
             db_filepath = DATABASE_IMAGE_FOLDER + filename
             image_file.save(filepath)                                  
         # add the product to the database
-        add_product(name, description, active, db_filepath, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size, weight, strain_terpenes, strain_taste)
+        add_product(name, description, active, db_filepath, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size, weight, strain_terpenes, strain_taste, strain_description)
         # add the attributes to the product
         product_id = cursor.lastrowid        
         for attribute_id in attributes:
@@ -152,6 +155,12 @@ def edit_product_page(product_id):
         strain_type = request.form['strain_type']   
         thc_percentage = request.form['thc_percentage']
         size = request.form['size']
+        weight = request.form['weight']
+        strain_terpenes = request.form['strain_terpenes']
+        strain_taste = request.form['strain_taste']
+        strain_description = request.form['strain_description']
+        # get the attributes from the select picker
+
 
 
         # change the product image if the user uploaded a new image
@@ -165,7 +174,23 @@ def edit_product_page(product_id):
 
 
         # update the product in the database
-        cursor.execute("UPDATE products SET product_name = %s, product_description = %s, product_active = %s, product_type = %s, product_brand = %s, product_price = %s, product_discount_price = %s, product_strain = %s, product_strain_type = %s, product_thc_percentage = %s, product_size = %s WHERE product_id = %s", (name, description, active, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size, product_id))
+        cursor.execute("""UPDATE products SET product_name = %s,
+                                              product_description = %s,
+                                              product_active = %s,
+                                              product_type = %s,
+                                              product_brand = %s,
+                                              product_price = %s,
+                                              product_discount_price = %s,
+                                              product_strain = %s,
+                                              product_strain_type = %s,
+                                              product_thc_percentage = %s,
+                                              product_size = %s,
+                                              product_weight = %s,
+                                              product_strain_terpenes = %s,
+                                              product_strain_taste = %s,
+                                              product_strain_description = %s
+                                              WHERE product_id = %s""", (name, description, active, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size, weight, strain_terpenes, strain_taste, strain_description, product_id))
+        # cursor.execute("UPDATE products SET product_name = %s, product_description = %s, product_active = %s, product_type = %s, product_brand = %s, product_price = %s, product_discount_price = %s, product_strain = %s, product_strain_type = %s, product_thc_percentage = %s, product_size = %s WHERE product_id = %s", (name, description, active, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size, product_id))
         connection.commit()
         # return the products page
         return redirect(url_for('products'))
@@ -209,5 +234,9 @@ def view_product_page(product_id):
     cursor.execute("SELECT * FROM products WHERE product_id = %s", (product_id))
     product_info = cursor.fetchone()
 
-    return render_template('view_product.html', product=product_info)
+    # get 5 random products from the database
+    cursor.execute("SELECT * FROM products ORDER BY RAND() LIMIT 5")
+    related_products = cursor.fetchall()
+
+    return render_template('view_product.html', product=product_info, related_products=related_products)
 

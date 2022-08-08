@@ -37,8 +37,9 @@
                                 <td>{{ product.product_description }}</td>
                                 <td>{{ product.product_active }}</td>
                                 <td>
-                                    <a href="/products/edit/{{ product.product_id }}" class="btn btn-primary">Edit</a>
-                                    <a href="/products/delete/{{ product.product_id }}" class="btn btn-danger">Delete</a>
+                                    <!-- put a delete and edit button -->                                                                                                        
+                                    <a href="/products/edit/{{ product.product_id }}" class="btn btn-primary" style="width: 100px; height: auto;">Edit</a>
+                                    <a href="/products/delete/{{ product.product_id }}" class="btn btn-danger" style="width: 100px; height: auto;">Delete</a>
                                 </td>
                             </tr>
                         {% endfor %}

@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `GreenTree`.`attributes` (
   `attribute_active` TINYINT NOT NULL DEFAULT '0',
   PRIMARY KEY (`attribute_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 78
+AUTO_INCREMENT = 82
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `GreenTree`.`product_attributes` (
   `attribute_value` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`product_attribute_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 153
+AUTO_INCREMENT = 185
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -67,13 +67,14 @@ CREATE TABLE IF NOT EXISTS `GreenTree`.`products` (
   `product_strain_taste` VARCHAR(45) NULL DEFAULT NULL,
   `product_strain_terpenes` VARCHAR(45) NULL DEFAULT NULL,
   `product_weight` VARCHAR(45) NULL DEFAULT NULL,
-  `product_rating` VARCHAR(45) NULL DEFAULT NULL,
+  `product_rating` INT NULL DEFAULT NULL,
   `product_reviews` VARCHAR(45) NULL DEFAULT NULL,
-  `product_strain_rating` VARCHAR(45) NULL DEFAULT NULL,
-  `product_strain_reviews` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`product_id`))
+  `product_strain_rating` INT NULL DEFAULT NULL,
+  `product_strain_reviews` VARCHAR(45) NOT NULL,
+  `product_strain_description` VARCHAR(256) NULL DEFAULT NULL,
+  PRIMARY KEY (`product_id`, `product_strain_reviews`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 964
+AUTO_INCREMENT = 1132
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 

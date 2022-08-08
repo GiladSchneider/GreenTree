@@ -44,7 +44,8 @@ for product in products_list:
                 strain = product['Strain'], 
                 strain_type = product['Strain Type'], 
                 thc_percentage = product['THC %'] if not pd.isnull(product['THC %']) else None,
-                size = product['Size']
+                size = product['Size'],
+                strain_description=product['Strain Description'] if not pd.isnull(product['Strain Description']) else None
                 )
 
     # add the attributes to the product    

@@ -151,6 +151,12 @@
                                 {% endfor %}
                             </datalist>
                     </div>
+
+                    <!-- add a section to edit the product strain description -->
+                    <div class="form-group">
+                        <label for="strain_description">Strain Description</label>
+                        <textarea class="form-control" id="strain_description" name="strain_description" rows="3">{{ product.product_strain_description }}</textarea>
+                    </div>
                     
 
                     <!-- display the products attributes -->
