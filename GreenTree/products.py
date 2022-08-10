@@ -1,8 +1,10 @@
+from unicodedata import name
 from numpy import random
 from attributes import get_attributes
 from config import *
 from flask import render_template, request, redirect, url_for
 from product_attributes import add_product_attribute, delete_by_product_attribute, get_product_attributes
+from datetime import date, datetime
 
 def get_products():
     cursor.execute("SELECT * FROM products")    # execute a query
@@ -228,8 +230,26 @@ def edit_product_page(product_id):
                             strain_types=strain_types)
 
 # create a route for the view_product url
-@app.route('/products/view/<product_id>')
+@app.route('/products/view/<product_id>', methods=['GET', 'POST'])
 def view_product_page(product_id):
+
+    # check if the request is a POST request
+    if request.method == 'POST':
+        # get the review from the form
+        rating = request.form['rate']
+        content = request.form['review_content']
+        date = datetime.now()
+        email = request.form['review_email']
+        name = request.form['review_name']
+
+        all = [rating, content, date, email, name, product_id]
+        
+        # insert the review into the database
+        cursor.execute("INSERT INTO reviews (review_rating, review_text, review_date, review_email, review_name, product_id) VALUES (%s, %s, %s, %s, %s, %s)", all)
+
+       
+
+
     # get product information from the database
     cursor.execute("SELECT * FROM products WHERE product_id = %s", (product_id))
     product_info = cursor.fetchone()
@@ -238,5 +258,10 @@ def view_product_page(product_id):
     cursor.execute("SELECT * FROM products ORDER BY RAND() LIMIT 5")
     related_products = cursor.fetchall()
 
-    return render_template('view_product.html', product=product_info, related_products=related_products)
+    # get the reviews for the product
+    cursor.execute(f"SELECT * FROM reviews WHERE product_id = {product_id}")
+    reviews=cursor.fetchall()
+    
+
+    return render_template('view_product.html', product=product_info, related_products=related_products, reviews=reviews)
 

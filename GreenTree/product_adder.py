@@ -1,10 +1,12 @@
-from os import listdir
-from config import cursor, DEFAULT_IMAGE_FILEPATH
+import os
+from os import listdir, rename
+from config import cursor
 from numpy.random import choice
 from products import add_product
 from product_attributes import add_product_attribute
 from attributes import add_attribute
 import pandas as pd
+from google_image_search import *
 
 # Read in the data from excel file 'products.xlsx'
 products = pd.read_excel('products.xlsx')
