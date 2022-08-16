@@ -21,7 +21,7 @@
                             <input type="text" class="form-control" id="attribute_description" name="attribute_description" placeholder="Description">
                         </div>
                         <!-- create a radio for the active section with yes and no options, yes being the default -->
-                        <div class="form-group">
+                        <div class="form-group" style="margin-top: 40px;">
                             <label for="attribute_active">Active</label>
                             <div class="radio">
                                 <label>
@@ -36,7 +36,44 @@
                                 </label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <!-- create a three section radio with options: general, effect, and flavor -->
+                        <div class="form-group" style="margin-top: 40px;">
+                            <label for="attribute_type">Type</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="attribute_type" id="attribute_type" value="general" checked>
+                                    General
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="attribute_type" id="attribute_type" value="effect">
+                                    Effect
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="attribute_type" id="attribute_type" value="flavor">
+                                    Flavor
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- if the attribute is a flavor or an effect, display an icon selection page wiht 5 icons -->
+                        <div class="form-group" style="margin-top: 40px;">
+                            <label for="attribute_icon">Icon</label>
+                            {% for icon in icons_list %}
+                                <div class="radio">                                    
+                                    <input type="radio" name="icon_filename" id="icon_filename" value="{{icon}}" checked>
+                                    <img src="{{icon}}" alt="" width="50" height="50">                                    
+                                </div>
+                                <p></p>
+                            {% endfor %}
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 40px;">Create Attribute</button>
+
                     </form>
                 </div>
             </div>

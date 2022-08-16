@@ -8,8 +8,8 @@ def get_attributes():
     return results
 
 # create an add attribute function
-def add_attribute(attribute_name, attribute_description, attribute_active):
-    cursor.execute("INSERT INTO attributes (attribute_name, attribute_description, attribute_active) VALUES (%s, %s, %s)", (attribute_name, attribute_description, attribute_active))
+def add_attribute(attribute_name, attribute_description, attribute_active, attribute_type="general", icon_filename=DATABASE_ICONS_FOLDER+"default_icon.svg"):
+    cursor.execute("INSERT INTO attributes (attribute_name, attribute_description, attribute_active, attribute_type, attribute_icon_filename) VALUES (%s, %s, %s, %s, %s)", (attribute_name, attribute_description, attribute_active, attribute_type, icon_filename))
     connection.commit()
     return True
 
@@ -35,14 +35,16 @@ def add_attribute_page():
         attribute_name = request.form['attribute_name']
         attribute_description = request.form['attribute_description']
         attribute_active = request.form['attribute_active']
+        attribute_type = request.form['attribute_type']
+        icon_filename = request.form['icon_filename']
         # add the attribute
-        add_attribute(attribute_name, attribute_description, attribute_active)
+        add_attribute(attribute_name, attribute_description, attribute_active, attribute_type, icon_filename)
         # redirect to the attributes page
         return redirect(url_for('attributes'))
     # if the request is a get
     else:
         # return the add attribute page
-        return render_template('add_attribute.html')
+        return render_template('add_attribute.html', icons_list=icons_list)
 
 # create a route for editing an attribute
 @app.route('/attributes/edit/<int:attribute_id>', methods=['GET', 'POST'])
@@ -53,8 +55,10 @@ def edit_attribute_page(attribute_id):
         attribute_name = request.form['attribute_name']
         attribute_description = request.form['attribute_description']
         attribute_active = request.form['attribute_active']
+        attribute_type = request.form['attribute_type']
+        icon_filename = request.form['icon_filename']
         # edit the attribute
-        cursor.execute("UPDATE attributes SET attribute_name = %s, attribute_description = %s, attribute_active = %s WHERE attribute_id = %s", (attribute_name, attribute_description, attribute_active, attribute_id))
+        cursor.execute("UPDATE attributes SET attribute_name = %s, attribute_description = %s, attribute_active = %s, attribute_type = %s, attribute_icon_filename = %s WHERE attribute_id = %s", (attribute_name, attribute_description, attribute_active, attribute_type, icon_filename, attribute_id))
         connection.commit()
         # redirect to the attributes page
         return redirect(url_for('attributes'))
@@ -64,7 +68,7 @@ def edit_attribute_page(attribute_id):
         cursor.execute("SELECT * FROM attributes WHERE attribute_id = %s", (attribute_id,))
         results = cursor.fetchone()
         # return the edit attribute page
-        return render_template('edit_attribute.html', attribute=results)
+        return render_template('edit_attribute.html', attribute=results, icons_list=icons_list)
 
 # create a route for deleting an attribute
 @app.route('/attributes/delete/<int:attribute_id>')

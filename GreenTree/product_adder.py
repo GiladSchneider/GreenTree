@@ -6,7 +6,6 @@ from products import add_product
 from product_attributes import add_product_attribute
 from attributes import add_attribute
 import pandas as pd
-from google_image_search import *
 
 # Read in the data from excel file 'products.xlsx'
 products = pd.read_excel('products.xlsx')
@@ -24,6 +23,10 @@ for index, row in products.iterrows():
     # add the product attributes to the product dictionary
     for column_name in column_names:
         product[column_name] = row[column_name]
+        
+        if type(product[column_name]) == str:
+            product[column_name] = product[column_name].strip()
+ 
     # add the product to the products list
     products_list.append(product)
 

@@ -75,7 +75,7 @@
                         <h2 style="color:#389B6B"><span style="text-decoration: line-through;">${{product.product_price}} </span>&nbsp;&nbsp;${{product.product_discount_price}}</h2>
                         {% endif %}
                         
-                        <h4>Product Reviews: 
+                        <h5>Product Reviews: 
                             <!-- display stars equal to the product rating -->
                             {% for i in range(product.product_rating) %}
 
@@ -92,7 +92,7 @@
                             <!-- write the product reviews faded in a smaller font -->
                             <span style="font-size: 20px;">{{product.product_rating}}.0</span>
                             <span style="font-size: 20px;color: #828282;">({{product.product_reviews}})</span>
-                        </h4>
+                        </h5>
 
                         <br>
 
@@ -110,7 +110,11 @@
                             </svg>
                         </a>
                         <p></p>
-                        <div><a href="" style="color: #389B6B;"><b>{{product.product_brand}}</a> | {{product.product_type}}</b></div>
+                        <div>
+                            <a href="/index/search/products/product_brand/{{product.product_brand}}" style="color: #389B6B;"><b>{{product.product_brand}}</b></a>
+                            |
+                            <a href="/index/search/products/product_type/{{product.product_type}}" style="color: black;"><b>{{product.product_type}}</b></a>
+                        </div>
                         
                     </div>
                 </div>
@@ -121,7 +125,7 @@
 
             <!-- PRODUCT IMAGES {{product.product_image_filepath}}-->
             <div class="col">
-                <div class="container vertical-center">
+                <div class="container">
                 
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -161,6 +165,9 @@
         </div>
 
 
+
+
+
         <br>
         <!-- PRODUCT EFFECT, FLAVOR, TERPENE BREAKDOWN -->
         <div class="container">
@@ -168,7 +175,7 @@
                 
                 <div class="col">
                     <div class="container vertical-center">
-                        <h4>Product Effects</h4>
+                        <h5>Product Effects</h5>
                         <p>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-emoji-laughing-fill" viewBox="0 0 16 16">
                             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5c0 .501-.164.396-.415.235C6.42 6.629 6.218 6.5 6 6.5c-.218 0-.42.13-.585.235C5.164 6.896 5 7 5 6.5 5 5.672 5.448 5 6 5s1 .672 1 1.5zm5.331 3a1 1 0 0 1 0 1A4.998 4.998 0 0 1 8 13a4.998 4.998 0 0 1-4.33-2.5A1 1 0 0 1 4.535 9h6.93a1 1 0 0 1 .866.5zm-1.746-2.765C10.42 6.629 10.218 6.5 10 6.5c-.218 0-.42.13-.585.235C9.164 6.896 9 7 9 6.5c0-.828.448-1.5 1-1.5s1 .672 1 1.5c0 .501-.164.396-.415.235z"/>
@@ -210,6 +217,78 @@
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <br>
+        <!-- PRODUCT EFFECT, FLAVOR, TERPENE BREAKDOWN 2-->
+        <div class="container">
+            <div class="row">
+                
+                <div class="col">
+                    <div class="container vertical-center">
+                        <h5>Product Effects</h5>
+                        <p>
+                            <!-- display all the icons for attributes that are effects  -->
+                            {% for attribute in attributes %}
+                                {% if attribute.attribute_type == "effect" %}
+                                    <a href="/index/search/product_attributes/attribute_id/{{attribute.attribute_id}}"><img src="{{attribute.attribute_icon_filename}}" alt="" width="50px" height="50px"></a>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container vertical-center">
+                        <h5>Product Flavor</h5>
+                        <p>
+                            <!-- display all the icons for attributes that are effects  -->
+                            {% for attribute in attributes %}
+                                {% if attribute.attribute_type == "flavor" %}
+                                    <a href="/index/search/product_attributes/attribute_id/{{attribute.attribute_id}}"><img src="{{attribute.attribute_icon_filename}}" alt="" width="50px" height="50px"></a>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container vertical-center">
+                        <h5>Terpene Breakdown</h5>
+                        
+                        <div class="progress" style="height: 32px">
+                            <div class="progress-bar" role="progressbar" style="width: 62%; font-size: 10px; color: whitesmoke;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Prod A</div>
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 12%; font-size: 10px; color: whitesmoke;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">Prod B</div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 12%; font-size: 10px; color: whitesmoke;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Prod C</div>
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 14%; font-size: 10px; color: whitesmoke;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Prod D</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
 
 
 

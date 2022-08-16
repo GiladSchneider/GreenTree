@@ -1,4 +1,10 @@
-UPDTAE schema generation code
+UPDTAE 
 automatically run schema creation on run, check if schema already exists
-create better product page front end
-creat product browsing page
+
+BACKEND
+make distinction betwena flavor, effect, and general attribute
+allow icon selection ? for flavor and effect
+
+FRONTEND
+make clickable things lead to respective pages (can look crappy)
+make everything clickable

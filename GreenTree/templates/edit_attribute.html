@@ -12,6 +12,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <form action="/attributes/edit/{{ attribute.attribute_id }}" method="POST">
+
                         <div class="form-group">
                             <label for="attribute_name">Name</label>
                             <input type="text" class="form-control" id="attribute_name" name="attribute_name" value="{{ attribute.attribute_name }}" placeholder="Name">
@@ -20,8 +21,9 @@
                             <label for="attribute_description">Description</label>
                             <input type="text" class="form-control" id="attribute_description" name="attribute_description" value="{{ attribute.attribute_description }}" placeholder="Description">
                         </div>
+                        
                         <!-- create a radio for the active section with yes and no options, yes being the default -->
-                        <div class="form-group">
+                        <div class="form-group" style="margin-top: 40px;">
                             <label for="attribute_active">Active</label>
                             <div class="radio">
                                 <label>
@@ -36,7 +38,44 @@
                                 </label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                        <!-- create a three section radio with options: general, effect, and flavor -->
+                        <div class="form-group" style="margin-top: 40px;">
+                            <label for="attribute_type">Type</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="attribute_type" id="attribute_type" value="general" {% if attribute.attribute_type == "general" %}checked{% endif %}>
+                                    General
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="attribute_type" id="attribute_type" value="effect" {% if attribute.attribute_type == "effect" %}checked{% endif %}>
+                                    Effect
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="attribute_type" id="attribute_type" value="flavor" {% if attribute.attribute_type == "flavor" %}checked{% endif %}>
+                                    Flavor
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- if the attribute is a flavor or an effect, display an icon selection page wiht 5 icons -->
+
+                        <div class="form-group" style="margin-top: 40px;">
+                            <label for="attribute_icon">Icon</label>
+                            {% for icon in icons_list %}
+                                <div class="radio">                                    
+                                    <input type="radio" name="icon_filename" id="icon_filename" value="{{icon}}" {% if attribute.attribute_icon_filename == icon %}checked{% endif %}>
+                                    <img src="{{icon}}" alt="" width="50" height="50">                                    
+                                </div>
+                                <p></p>
+                            {% endfor %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 40px;">Update Attribute</button>
                     </form>
                 </div>
             </div>

@@ -161,9 +161,6 @@ def edit_product_page(product_id):
         strain_terpenes = request.form['strain_terpenes']
         strain_taste = request.form['strain_taste']
         strain_description = request.form['strain_description']
-        # get the attributes from the select picker
-
-
 
         # change the product image if the user uploaded a new image
         db_filepath = DEFAULT_IMAGE_FILEPATH
@@ -173,7 +170,6 @@ def edit_product_page(product_id):
             db_filepath = DATABASE_IMAGE_FOLDER + filename
             image_file.save(filepath)
             cursor.execute("UPDATE products SET product_image_filepath = %s WHERE product_id = %s", (db_filepath, product_id))
-
 
         # update the product in the database
         cursor.execute("""UPDATE products SET product_name = %s,
@@ -192,7 +188,13 @@ def edit_product_page(product_id):
                                               product_strain_taste = %s,
                                               product_strain_description = %s
                                               WHERE product_id = %s""", (name, description, active, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size, weight, strain_terpenes, strain_taste, strain_description, product_id))
-        # cursor.execute("UPDATE products SET product_name = %s, product_description = %s, product_active = %s, product_type = %s, product_brand = %s, product_price = %s, product_discount_price = %s, product_strain = %s, product_strain_type = %s, product_thc_percentage = %s, product_size = %s WHERE product_id = %s", (name, description, active, product_type, brand, price, discount_price, strain, strain_type, thc_percentage, size, product_id))
+        
+        # get the attributes from the select picker
+        attributes = request.form.getlist('attributes')
+         # add the attributes to the product     
+        for attribute_id in attributes:
+            add_product_attribute(product_id=product_id, attribute_id=attribute_id, attribute_value='No Value')
+
         connection.commit()
         # return the products page
         return redirect(url_for('products'))
@@ -203,6 +205,19 @@ def edit_product_page(product_id):
 
     # get the attributes
     attributes = get_attributes()
+    
+    # get the product attributes from the database
+    cursor.execute("SELECT * FROM product_attributes WHERE product_id = %s", (product_id))
+    product_attributes = cursor.fetchall()
+    # remove the product attributes from the attributes list
+    cleaned_attributes = []
+    seen_attributes = {}
+    for product_attribute in product_attributes:
+        seen_attributes[product_attribute['attribute_id']] = True
+    for attribute in attributes:        
+        if attribute['attribute_id'] not in seen_attributes:
+            cleaned_attributes.append(attribute)
+    attributes = cleaned_attributes
 
     # grab a list of product brands from the database
     cursor.execute("SELECT DISTINCT product_brand FROM products")
@@ -246,9 +261,7 @@ def view_product_page(product_id):
         
         # insert the review into the database
         cursor.execute("INSERT INTO reviews (review_rating, review_text, review_date, review_email, review_name, product_id) VALUES (%s, %s, %s, %s, %s, %s)", all)
-
-       
-
+        connection.commit()
 
     # get product information from the database
     cursor.execute("SELECT * FROM products WHERE product_id = %s", (product_id))
@@ -261,7 +274,38 @@ def view_product_page(product_id):
     # get the reviews for the product
     cursor.execute(f"SELECT * FROM reviews WHERE product_id = {product_id}")
     reviews=cursor.fetchall()
+
+    # get the products attributes from the database
+    cursor.execute("SELECT * FROM product_attributes WHERE product_id = %s", (product_id))
+    product_attribute_ids = cursor.fetchall()
+
+    attributes = []
+    for product_attribute_id in product_attribute_ids:
+        cursor.execute("SELECT * FROM attributes WHERE attribute_id = %s", (product_attribute_id['attribute_id']))
+        attributes.append(cursor.fetchone())
+
+    return render_template('view_product.html', product=product_info, related_products=related_products, reviews=reviews, icons_list=icons_list, attributes=attributes)
+
+# create a route for the search products url
+@app.route('/index/search/<database>/<category>/<query>', methods=['GET', 'POST'])
+def search_type(database, category, query):
+    sql_query = f"""SELECT * FROM {database} WHERE {category} = '{query}'"""
+    print('\n', sql_query, '\n')
+    print('SUCCESS')
+    # get the products that match the search query
+    cursor.execute(sql_query)
+    results = cursor.fetchall()
+
+    # if we are searching product attributes, return the correcponding products
+    new_results = []
+    if database == 'product_attributes':
+        for result in results:
+            cursor.execute("SELECT * FROM products WHERE product_id = %s", (result['product_id']))
+            new_results.append(cursor.fetchone())
+        results = new_results
     
+    return render_template('index.html', products=results)
 
-    return render_template('view_product.html', product=product_info, related_products=related_products, reviews=reviews)
 
+    
+       
