@@ -25,9 +25,11 @@ CREATE TABLE IF NOT EXISTS `GreenTree`.`attributes` (
   `attribute_name` VARCHAR(64) NOT NULL,
   `attribute_description` VARCHAR(256) NULL DEFAULT NULL,
   `attribute_active` TINYINT NOT NULL DEFAULT '0',
+  `attribute_type` VARCHAR(7) NOT NULL,
+  `attribute_icon_filename` VARCHAR(64) NULL DEFAULT NULL,
   PRIMARY KEY (`attribute_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 82
+AUTO_INCREMENT = 117
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -42,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `GreenTree`.`product_attributes` (
   `attribute_value` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`product_attribute_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 185
+AUTO_INCREMENT = 276
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -71,10 +73,28 @@ CREATE TABLE IF NOT EXISTS `GreenTree`.`products` (
   `product_reviews` VARCHAR(45) NULL DEFAULT NULL,
   `product_strain_rating` INT NULL DEFAULT NULL,
   `product_strain_reviews` VARCHAR(45) NOT NULL,
-  `product_strain_description` VARCHAR(256) NULL DEFAULT NULL,
-  PRIMARY KEY (`product_id`, `product_strain_reviews`))
+  `product_strain_description` VARCHAR(512) NULL DEFAULT 'None',
+  PRIMARY KEY (`product_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 1132
+AUTO_INCREMENT = 1510
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `GreenTree`.`reviews`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `GreenTree`.`reviews` (
+  `review_id` INT NOT NULL AUTO_INCREMENT,
+  `product_id` INT NULL DEFAULT NULL,
+  `review_rating` INT NULL DEFAULT NULL,
+  `review_text` VARCHAR(128) NULL DEFAULT NULL,
+  `review_date` DATETIME NULL DEFAULT NULL,
+  `review_email` VARCHAR(64) NULL DEFAULT NULL,
+  `review_name` VARCHAR(128) NULL DEFAULT NULL,
+  PRIMARY KEY (`review_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
